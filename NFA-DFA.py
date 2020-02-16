@@ -58,7 +58,7 @@ def form_DFA(transitions):#to convert eps-NFA to DFA
     cigma,new_states,new_states_added,aux_list,new_dict,aux,count = sigma,list(),list(),list(),dict(),dict(),0
     cigma.remove('eps');cigma.remove(' Stat');cigma.remove('~eps-closure')
     for i in Transitions:
-        if Transitions[i][' Stat'] == 'Ini':
+        if Transitions[i][' Stat'] == 'Ini' or Transitions[i][' Stat'] == 'Ini & Fin':
             new_states.append(Transitions[i]['~eps-closure'])
             new_states_added = new_states[0]
     unique_state = True
@@ -112,7 +112,7 @@ def print_DFA_tt(transitions,aux):
     print(tabulate(Pri_list,headers=header_list))
 
 if __name__ == "__main__":
-    file = open("data2.txt",'r+')
+    file = open("data.txt",'r+')
     main_dic = dict() #main is the one having the state and its transitions.
     # num = int(input("Input the number of states: "))
     num = int(file.readline())
@@ -135,12 +135,12 @@ if __name__ == "__main__":
     # imp = input("Input the initial states: ").split()
     # fmp = input("Input the final states: ").split()
     for i in main_dic:
-        if i in imp:
-            main_dic[i][' Stat'] = 'Ini'
+        if i in imp and i in fmp:
+            main_dic[i][' Stat'] = 'Ini & Fin'
         elif i in fmp:
             main_dic[i][' Stat'] = 'Fin'
-        elif i in imp and i in fmp:
-            main_dic[i][' Stat'] = 'Ini & Fin'
+        elif i in imp:
+            main_dic[i][' Stat'] = 'Ini'
         else:
             main_dic[i][' Stat'] = ''
     main_dic = get_closure(main_dic)
