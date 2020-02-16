@@ -1,6 +1,8 @@
 # e-NFA-to-DFA
 Theory of Computation Assignment
 
+Takes an epsilon-NFA as input and gives out a DFA as an output, in a neat tabular form
+
 Input Format:
     "input":"list of states";"input":"list of states"
     Do NOT input an epsilon transition to the same state //TODO    Fix epsilon same state bug
@@ -13,5 +15,4 @@ Certain lines are commented out, they are for the input from the file. The forma
      "initial state"
      "final state"
      
-     
-    
+//TODO Minimize the DFA
