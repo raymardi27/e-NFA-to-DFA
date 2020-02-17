@@ -11,7 +11,8 @@ Input Format:
 Certain lines are commented out, they are for the input from the file. The format as given in the file is to be followed.
     Format is:
      "Number of States"
-     "input along with transitions" //as mentioned above
+     "input along with transitions"
+     "next input and so on" //format of input as mentioned above
      "initial state"
      "final state"
      
