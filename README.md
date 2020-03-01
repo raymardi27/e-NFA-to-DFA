@@ -3,6 +3,8 @@ Theory of Computation Assignment
 
 Takes an epsilon-NFA as input and gives out a DFA as an output, in a neat tabular form
 
+Does Not work for normal NFA. It must be an epsilon-NFA.
+
 Input Format:
     "input":"list of states";"input":"list of states"
     Do NOT input an epsilon transition to the same state //TODO    Fix epsilon same state bug
