@@ -69,7 +69,6 @@ def form_DFA(transitions):#to convert eps-NFA to DFA
             new_states_added = new_states[0]
         if Transitions[i][' Stat'] == 'Fin' or Transitions[i][' Stat'] == 'Ini & Fin':
             final_state.append(i)
-    print("Final states are:",final_state)
     unique_state = True
     while unique_state:
         state = 'A'+str(count)
@@ -97,8 +96,16 @@ def form_DFA(transitions):#to convert eps-NFA to DFA
                 unique_state = True
                 break 
     test_dic = new_dict
-    for i in test_dic:
-    # trans_table(new_dict,1)
+    for i in aux:
+        for j in final_state:
+            if j in aux[i]:
+                new_dict[i][' Stat'] = 'Final'
+            else:
+                new_dict[i][' Stat'] = ''
+    for i in new_dict:
+        for j in cigma:
+            print(new_dict[i][j])
+    trans_table(new_dict,1)
     for i in aux:
         print("with ",i,'=',end="")
         if aux[i] == []:
@@ -113,14 +120,17 @@ def print_DFA_tt(transitions,aux):
     Pri_list,header_list = [],[' ']
     for i,j in zip(transitions,aux):
         row = [j]
+        row.append(transitions[i][' Stat'])
         for k in cigma:
-            header_list.append("Input:\n" + str(k))
+            header_list.append(k)
             for st,val in aux.items():
                 if val == transitions[i][k]:
                     row.append(st)
         Pri_list.append(row)
     header_list = sorted(list(set(header_list)))
     print(tabulate(Pri_list,headers=header_list))
+
+            
 
 if __name__ == "__main__":
     file = open("data.txt",'r+')
