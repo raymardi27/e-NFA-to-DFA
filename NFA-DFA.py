@@ -95,16 +95,16 @@ def form_DFA(transitions):#to convert eps-NFA to DFA
                 new_states_added = i
                 unique_state = True
                 break 
-    test_dic = new_dict
+    test_dict = new_dict
     for i in aux:
         for j in final_state:
             if j in aux[i]:
                 new_dict[i][' Stat'] = 'Final'
             else:
                 new_dict[i][' Stat'] = ''
-    for i in new_dict:
+    for i in test_dict:
         for j in cigma:
-            print(new_dict[i][j])
+            test_dict[i][j] = list(aux.keys())[list(aux.values()).index(test_dict[i][j])]
     trans_table(new_dict,1)
     for i in aux:
         print("with ",i,'=',end="")
@@ -112,23 +112,22 @@ def form_DFA(transitions):#to convert eps-NFA to DFA
             print(" Null")
         else:
             print(aux[i])
-    print("\nDFA Transition table: \n")
-    print_DFA_tt(new_dict,aux)
+    # print_DFA_tt(new_dict,aux)
         
-def print_DFA_tt(transitions,aux):
-    cigma = get_sigma(transitions,1)
-    Pri_list,header_list = [],[' ']
-    for i,j in zip(transitions,aux):
-        row = [j]
-        row.append(transitions[i][' Stat'])
-        for k in cigma:
-            header_list.append(k)
-            for st,val in aux.items():
-                if val == transitions[i][k]:
-                    row.append(st)
-        Pri_list.append(row)
-    header_list = sorted(list(set(header_list)))
-    print(tabulate(Pri_list,headers=header_list))
+# def print_DFA_tt(transitions,aux):
+#     cigma = get_sigma(transitions,1)
+#     Pri_list,header_list = [],[' ']
+#     for i,j in zip(transitions,aux):
+#         row = [j]
+#         row.append(transitions[i][' Stat'])
+#         for k in cigma:
+#             header_list.append(k)
+#             for st,val in aux.items():
+#                 if val == transitions[i][k]:
+#                     row.append(st)
+#         Pri_list.append(row)
+#     header_list = sorted(list(set(header_list)))
+#     print(tabulate(Pri_list,headers=header_list))
 
             
 
@@ -165,7 +164,7 @@ if __name__ == "__main__":
         else:
             main_dic[i][' Stat'] = ''
     main_dic = get_closure(main_dic)
-    trans_table(main_dic)
+    # trans_table(main_dic)
     print("\n\nConverting to DFA...\n")
     form_DFA(main_dic)
             
