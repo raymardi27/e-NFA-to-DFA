@@ -56,6 +56,7 @@ def get_closure(transitions):#To calculate epsilon closure values
     
 def form_DFA(transitions):#to convert eps-NFA to DFA
     sigma = get_sigma(transitions)
+    print("Conversion Started")
     if 'eps' not in sigma:
         print("This is not an epsilon NFA. Sorry the code won't work.")
         return 
@@ -70,6 +71,7 @@ def form_DFA(transitions):#to convert eps-NFA to DFA
         if Transitions[i][' Stat'] == 'Fin' or Transitions[i][' Stat'] == 'Ini & Fin':
             final_state.append(i)
     unique_state = True
+    print("Came upto 'Unique State'")
     while unique_state:
         state = 'A'+str(count)
         aux[state] = new_states_added
@@ -132,7 +134,7 @@ def form_DFA(transitions):#to convert eps-NFA to DFA
             
 
 if __name__ == "__main__":
-    file = open("data.txt",'r+')
+    file = open("data2.txt",'r+')
     main_dic = dict() #main is the one having the state and its transitions.
     # num = int(input("Input the number of states: "))
     num = int(file.readline())
@@ -164,7 +166,7 @@ if __name__ == "__main__":
         else:
             main_dic[i][' Stat'] = ''
     main_dic = get_closure(main_dic)
-    # trans_table(main_dic)
+    trans_table(main_dic)
     print("\n\nConverting to DFA...\n")
     form_DFA(main_dic)
             
