@@ -41,6 +41,8 @@ def trans_table(transitions,n=0):#To print the transition table
     
 def get_closure(transitions):#To calculate epsilon closure values
     sigma = get_sigma(transitions)
+    if 'eps' not in sigma:
+        return
     Transitions = complete(transitions,sigma)
     for i in Transitions:
         eps_list = [i]
@@ -54,13 +56,20 @@ def get_closure(transitions):#To calculate epsilon closure values
     
 def form_DFA(transitions):#to convert eps-NFA to DFA
     sigma = get_sigma(transitions)
+    if 'eps' not in sigma:
+        print("This is not an epsilon NFA. Sorry the code won't work.")
+        return 
     Transitions = complete(transitions,sigma) #is copy to make sure that original data is not accidentally overwritten
     cigma,new_states,new_states_added,aux_list,new_dict,aux,count = sigma,list(),list(),list(),dict(),dict(),0
     cigma.remove('eps');cigma.remove(' Stat');cigma.remove('~eps-closure')
+    final_state = []
     for i in Transitions:
         if Transitions[i][' Stat'] == 'Ini' or Transitions[i][' Stat'] == 'Ini & Fin':
             new_states.append(Transitions[i]['~eps-closure'])
             new_states_added = new_states[0]
+        if Transitions[i][' Stat'] == 'Fin' or Transitions[i][' Stat'] == 'Ini & Fin':
+            final_state.append(i)
+    print("Final states are:",final_state)
     unique_state = True
     while unique_state:
         state = 'A'+str(count)
@@ -87,7 +96,9 @@ def form_DFA(transitions):#to convert eps-NFA to DFA
                 new_states_added = i
                 unique_state = True
                 break 
-    trans_table(new_dict,1)
+    test_dic = new_dict
+    for i in test_dic:
+    # trans_table(new_dict,1)
     for i in aux:
         print("with ",i,'=',end="")
         if aux[i] == []:
