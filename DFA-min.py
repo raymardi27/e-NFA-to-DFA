@@ -1,37 +1,6 @@
 from re import sub
 from tabulate import tabulate
-from .NFA-DFA
-
-def get_sigma(transitions,n=0):#To get the alphabet
-    max = 'q0'
-    if n == 1:
-        max = 'A0'
-    Transitions = transitions
-    for i in Transitions:
-        if len(Transitions[max]) < len(Transitions[i]):
-            max = i
-        for j in Transitions[i]:
-            if j not in Transitions[max]:
-                Transitions[max][j] = "-"
-    sigma = list()
-    for i in Transitions[max]:
-        sigma.append(i)
-    return sorted(sigma)
-
-def trans_table(transitions,n=0):#To print the transition table
-    sigma = get_sigma(transitions,n)
-    Transitions = complete(transitions,sigma)
-    Pri_List,count = [],0
-    state = 'q'
-    if n == 1:
-        state = 'A'
-    for i in Transitions:
-        row = [state+str(count)]
-        for j in sigma:
-            row.append(Transitions[i][j])
-        Pri_List.append(row)
-        count+=1
-    print(tabulate(Pri_List,headers=sigma))
+from NFA_DFA import get_sigma,complete,trans_table
 
 if __name__ == "__main__":
     file = open("dfadata.txt",'r+')
