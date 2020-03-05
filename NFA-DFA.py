@@ -107,14 +107,13 @@ def form_DFA(transitions):#to convert eps-NFA to DFA
     for i in test_dict:
         for j in cigma:
             test_dict[i][j] = list(aux.keys())[list(aux.values()).index(test_dict[i][j])]
-    trans_table(new_dict,1)
+    trans_table(test_dict,1)
     for i in aux:
         print("with ",i,'=',end="")
         if aux[i] == []:
             print(" Null")
         else:
             print(aux[i])
-    # print_DFA_tt(new_dict,aux)
         
 # def print_DFA_tt(transitions,aux):
 #     cigma = get_sigma(transitions,1)
