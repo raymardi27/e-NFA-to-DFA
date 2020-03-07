@@ -4,20 +4,48 @@ from tabulate import tabulate
 from NFA_DFA import get_sigma,complete,trans_table
 
 def divide(i,P,transitions):
+    if len(i) == 1:
+        return i
+    print("I is :",i)
     sigma = get_sigma(transitions)
     sigma.remove(' Stat')
     Dup = deepcopy(transitions)
     for k in sigma:
         for  j in i:
             if transitions[j][k][0] in i:
-                Dup[j][str(k)+" tr"] = 'Same'
+                Dup[j]["tr"+str(k)] = 'Same'
             else:
                 for l in P:
                     if l != i:
                         if transitions[j][k][0] in l:
-                            Dup[j][str(k)+" tr"] = str(l)
+                            Dup[j]["tr"+str(k)] = str(l)
     trans_table(Dup)
-
+    divgrp = list()
+    for j in i:
+        if len(divgrp) == 1 and divgrp[0] == i:
+            break
+        grp,ele = [j],1 # ele is to let us know that the number of elements in each "group". Just to avoid using the len function
+        for l in i[(i.index(j)+1):]:
+            if len(l) == 0:
+                    break
+            count = 0
+            for k in sigma:    
+                if Dup[j]["tr"+str(k)] == Dup[l]["tr"+str(k)]:
+                    count+=1
+            if count == len(sigma):
+                grp.append(l)
+        grp = sorted(list(set(grp)))
+        print(grp)
+        for m in divgrp:
+            if grp[0] in m:
+                ele = 0
+        if ele != 0:
+            divgrp.append(grp)
+    print("divgrp:",divgrp)
+    lis = list()
+    for i in divgrp:
+        lis.append(divide(i,divgrp,transitions))
+    return lis
 
 def minimize(transitions):
     P,a,b = list(),list(),list()
@@ -27,8 +55,10 @@ def minimize(transitions):
         else:
             a.append(i)
     P.append(a);P.append(b)
+    B = list()
     for i in P:
-        divide(i,P,transitions)
+        B.append(divide(i,P,transitions))
+    print(B)
 
 
 
